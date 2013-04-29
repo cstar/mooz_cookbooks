@@ -1,3 +1,0 @@
-[submodule "elasticsearch"]
-	path = elasticsearch
-	url = git://github.com/tkawa/cookbook-elasticsearch.git
