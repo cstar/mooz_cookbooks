@@ -4,9 +4,9 @@
 [submodule "ark"]
 	path = ark
 	url = https://github.com/opscode-cookbooks/ark
-[submodule "elasticsearch"]
-	path = elasticsearch
-	url = git://github.com/elasticsearch/cookbook-elasticsearch.git
 [submodule "erlang"]
 	path = erlang
 	url = git://github.com/opscode-cookbooks/erlang.git
+[submodule "elasticsearch"]
+	path = elasticsearch
+	url = git://github.com/cstar/cookbook-elasticsearch.git
