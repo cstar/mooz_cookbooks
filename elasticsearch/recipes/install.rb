@@ -1,5 +1,6 @@
 #-*- encoding : utf-8 -*-
 elasticsearch = "elasticsearch-#{node.elasticsearch[:version]}"
+include_recipe "java::packages"
 include_recipe "elasticsearch::packages"
 
 # Create user and group
@@ -33,11 +34,11 @@ end
   to "#{node.elasticsearch[:home_dir]}-#{node.elasticsearch[:version]}"
 end
 
-# Install Kuromoji plugin
+# Install cloud-aws plugin
 script "install_plugins" do
   interpreter "bash"
   user "root"
-  cwd "#{node.elasticsearch[:home_dir]}"
+  cwd node.elasticsearch[:home_dir]
   code <<-EOH
     bin/plugin cloud-aws
   EOH
