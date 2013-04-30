@@ -1,9 +1,6 @@
 [submodule "java"]
 	path = java
 	url = git://github.com/opscode-cookbooks/java.git
-[submodule "cookbook-elasticsearch"]
-	path = elasticsearch
-	url = git://github.com/elasticsearch/cookbook-elasticsearch.git
 [submodule "ark"]
 	path = ark
 	url = https://github.com/opscode-cookbooks/ark
