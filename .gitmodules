@@ -1,6 +1,6 @@
 [submodule "java"]
 	path = java
-	url = git://github.com/opscode-cookbooks/java.git
+	url = git://github.com/cstar/java.git
 [submodule "ark"]
 	path = ark
 	url = https://github.com/opscode-cookbooks/ark
