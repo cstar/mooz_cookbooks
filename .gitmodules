@@ -6,7 +6,7 @@
 	url = https://github.com/opscode-cookbooks/ark
 [submodule "erlang"]
 	path = erlang
-	url = git://github.com/opscode-cookbooks/erlang.git
+	url = git://github.com/cstar/erlang.git
 [submodule "elasticsearch"]
 	path = elasticsearch
 	url = git://github.com/cstar/cookbook-elasticsearch.git
