@@ -41,6 +41,6 @@ node[:deploy].each do |application, deploy|
 
   execute "restart server" do
     command "./init.sh restart"
-    cwd "#{params[:deploy_to]}/current"
+    cwd "#{deploy[:deploy_to]}/current"
   end
 end
