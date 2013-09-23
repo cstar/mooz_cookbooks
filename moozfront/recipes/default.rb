@@ -26,8 +26,20 @@ node[:deploy].each do |application, deploy|
     variables :erlasticsearch_elb => node[:moozfront][:erlasticsearch_elb]
   end
 
+
+
   opsworks_deploy do
     deploy_data deploy
     app application
+  end
+
+  execute "fetch deps" do
+    command "./rebar get_deps compile"
+    cwd "#{params[:path]}/current"
+  end
+
+  execute "restart server" do
+    command "./init.sh restart"
+    cwd "#{params[:path]}/current"
   end
 end
