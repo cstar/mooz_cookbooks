@@ -26,12 +26,8 @@ node[:deploy].each do |application, deploy|
     variables :erlasticsearch_elb => node[:moozfront][:erlasticsearch_elb]
   end
 
-  deploy[:symlink_before_migrate] = {"erlasticsearch.config" => "erlasticsearch.config"}
   opsworks_deploy do
     deploy_data deploy
     app application
   end
-
-
-
 end
