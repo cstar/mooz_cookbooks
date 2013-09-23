@@ -1,0 +1,12 @@
+[{erlasticsearch, [
+     {pool_name, <<"mooz">>},
+     {pool_options, [{size, 10},
+                     {max_overflow, 20}
+                    ]},
+                    % These options are passed to Thrift
+     {connection_options, [{thrift_host, "<%= node["mooz"]["elasticsearch_elb"]%>"},
+                           {thrift_port, 9500},
+                           {thrift_options, [{framed, false}]},
+                           {binary_response, false}
+                    ]}
+    ]}].
