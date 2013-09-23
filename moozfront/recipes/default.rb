@@ -12,7 +12,7 @@ node[:deploy].each do |application, deploy|
 
   # create shared/ directory structure
   ['log','deps'].each do |dir_name|
-    directory "#{deploy[:path]}/shared/#{dir_name}" do
+    directory "#{deploy[:deploy_to]}/shared/#{dir_name}" do
       group deploy[:group]
       owner deploy[:user]
       mode 0770
@@ -21,7 +21,7 @@ node[:deploy].each do |application, deploy|
     end
   end
 
-  template "#{deploy[:path]}/shared/erlasticsearch.config" do
+  template "#{deploy[:deploy_to]}/shared/erlasticsearch.config" do
     source "erlasticsearch.config.erb"
     variables :erlasticsearch_elb => node[:moozfront][:erlasticsearch_elb]
   end
@@ -35,11 +35,11 @@ node[:deploy].each do |application, deploy|
 
   execute "fetch deps" do
     command "./rebar get_deps compile"
-    cwd "#{deploy[:path]}/current"
+    cwd "#{deploy[:deploy_to]}/current"
   end
 
   execute "restart server" do
     command "./init.sh restart"
-    cwd "#{params[:path]}/current"
+    cwd "#{params[:deploy_to]}/current"
   end
 end
