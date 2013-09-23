@@ -34,7 +34,7 @@ node[:deploy].each do |application, deploy|
   end
 
   execute "fetch deps" do
-    command "./rebar get_deps compile"
+    command "./rebar get-deps compile"
     cwd "#{deploy[:deploy_to]}/current"
   end
 
