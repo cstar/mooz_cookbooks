@@ -10,8 +10,9 @@ node[:deploy].each do |application, deploy|
     recursive true
   end
 
+
   # create shared/ directory structure
-  ['log','deps'].each do |dir_name|
+  ['log','deps', "ebin"].each do |dir_name|
     directory "#{deploy[:deploy_to]}/shared/#{dir_name}" do
       group deploy[:group]
       owner deploy[:user]
