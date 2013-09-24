@@ -1,7 +1,8 @@
 include_recipe 'deploy'
 
 node[:deploy].each do |application, deploy|
-
+  next if not node[:opsworks][:instance][:layers].include? application
+  
   directory "#{params[:path]}/shared" do
     group deploy[:group]
     owner deploy[:user]
@@ -12,7 +13,7 @@ node[:deploy].each do |application, deploy|
 
 
   # create shared/ directory structure
-  ['log','deps', "ebin"].each do |dir_name|
+  ['log','deps'].each do |dir_name|
     directory "#{deploy[:deploy_to]}/shared/#{dir_name}" do
       group deploy[:group]
       owner deploy[:user]
