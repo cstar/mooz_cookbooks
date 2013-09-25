@@ -39,8 +39,26 @@ node[:deploy].each do |application, deploy|
     app application
   end
 
+  link "#{deploy[:deploy_to]}/current/deps" do
+    target_file "#{deploy[:deploy_to]}/shared/deps"
+    owner deploy[:user]
+  end
+
+  if node[:moozfront][:force_deps] == true
+    execute "remove deps" do
+      command "rm -Rf *"
+      cwd "#{deploy[:deploy_to]}/shared/deps"
+      user deploy[:user]
+    end
+    execute "fetch deps" do
+      command "./rebar get-deps compile"
+      cwd "#{deploy[:deploy_to]}/current"
+      user deploy[:user]
+    end
+  end
+
   execute "fetch deps" do
-    command "./rebar get-deps compile"
+    command "./rebar compile skip_deps=true"
     cwd "#{deploy[:deploy_to]}/current"
     user deploy[:user]
   end
