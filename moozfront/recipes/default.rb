@@ -42,10 +42,12 @@ node[:deploy].each do |application, deploy|
   execute "fetch deps" do
     command "./rebar get-deps compile"
     cwd "#{deploy[:deploy_to]}/current"
+    user deploy[:user]
   end
 
   execute "restart server" do
     command "./init.sh restart"
+    user deploy[:user]
     cwd "#{deploy[:deploy_to]}/current"
   end
 end
