@@ -2,8 +2,12 @@ include_recipe 'deploy'
 
 node[:deploy].each do |application, deploy|
   next if not node[:opsworks][:instance][:layers].include? application
-  
-  directory "#{params[:path]}/shared" do
+
+  opsworks_deploy_user do
+    deploy_data deploy
+  end
+
+  directory "#{deploy[:deploy_to]}/shared" do
     group deploy[:group]
     owner deploy[:user]
     mode 0770
