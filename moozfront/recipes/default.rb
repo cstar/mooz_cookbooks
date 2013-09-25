@@ -41,6 +41,7 @@ node[:deploy].each do |application, deploy|
 
   link "#{deploy[:deploy_to]}/current/deps" do
     target_file "#{deploy[:deploy_to]}/shared/deps"
+    to "#{deploy[:deploy_to]}/current/deps"
     owner deploy[:user]
   end
 
