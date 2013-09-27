@@ -76,7 +76,7 @@ node[:deploy].each do |application, deploy|
     end
   end
 
-  execute "fetch deps" do
+  execute "compile app" do
     command "./rebar compile skip_deps=true"
     cwd "#{deploy[:deploy_to]}/current"
     user deploy[:user]
@@ -85,6 +85,6 @@ node[:deploy].each do |application, deploy|
   execute "restart server" do
     command "./boss restart"
     user deploy[:user]
-    cwd "#{deploy[:deploy_to]}"
+    cwd "#{deploy[:deploy_to]}/current"
   end
 end
