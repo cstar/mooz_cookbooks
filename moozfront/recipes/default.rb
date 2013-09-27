@@ -34,6 +34,16 @@ node[:deploy].each do |application, deploy|
     variables :erlasticsearch_elb => node[:moozfront][:erlasticsearch_elb]
   end
 
+  template "#{deploy[:deploy_to]}/shared/boss" do
+    mode 0755
+    source "boss.erb"
+    group deploy[:group]
+    owner deploy[:user]
+    variables :hostname => node[:opsworks][:instance][:hostname],
+              :application => application,
+              :deploy_path => deploy[:deploy_to]
+  end
+
 
 
   opsworks_deploy do
@@ -50,14 +60,7 @@ node[:deploy].each do |application, deploy|
     end
   end
 
-  template "#{deploy[:deploy_to]}/current/init.sh" do
-    source "init.sh.erb"
-    group deploy[:group]
-    owner deploy[:user]
-    variables :hostname => node[:opsworks][:instance][:hostname],
-              :application => application,
-              :deploy_path => deploy[:deploy_to]
-  end
+
 
 
   if node[:moozfront][:force_deps] == true
@@ -80,8 +83,8 @@ node[:deploy].each do |application, deploy|
   end
 
   execute "restart server" do
-    command "./init.sh restart"
+    command "./boss restart"
     user deploy[:user]
-    cwd "#{deploy[:deploy_to]}/current"
+    cwd "#{deploy[:deploy_to]}"
   end
 end
