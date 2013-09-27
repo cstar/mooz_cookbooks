@@ -1,0 +1,26 @@
+cd `dirname $0`
+
+case "${1:-''}" in
+  'start')
+    echo "starting boss in production mode..."
+    erl +K true +P 32768 -boot start_sasl -config boss -s boss -noshell -detached -sname <%=@app%>@<%=hostname%> -pa <%=@deploy_path%>/current/ebin -pa <%=@deploy_path%>/shared/deps/*/ebin
+    ;;
+  'stop')
+    echo "stopping boss..."
+    erl -noshell -pa ebin  -sname stopper_<%=@app%>@<%=hostname%> -eval "rpc:call('<%=@app%>@<%=hostname%>', init, stop, [])." -s init stop
+    ;;
+  'reload')
+    echo "Hot code reload, (WARN: Only this node)"
+    erl -noshell -pa ebin  -sname reloader_<%=@app%>@<%=hostname%> -eval "rpc:call('<%=@app%>@<%=hostname%>', boss_load, reload_all, []), rpc:call('<%=@app%>@<%=hostname%>', boss_web, reload_routes, []), rpc:call('<%=@app%>@<%=hostname%>', boss_web, reload_all_translations, [])." -s init stop
+    ;;
+  'restart')
+    echo "Restarting (stop-start) boss..."
+    $0 stop
+    $0 start
+    ;;
+  *)
+    echo "Chicago Boss Boot System"
+    echo "Usage: $SELF start|start-dev|stop|reload|restart"
+    exit 1
+    ;;
+esac
