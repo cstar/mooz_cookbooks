@@ -54,8 +54,8 @@ node[:deploy].each do |application, deploy|
     source "init.sh.erb"
     group deploy[:group]
     owner deploy[:user]
-    variables :hostname => node[:opsworks][:instance][:hostname]
-              :application => application
+    variables :hostname => node[:opsworks][:instance][:hostname],
+              :application => application,
               :deploy_path => deploy[:deploy_to]
   end
 
