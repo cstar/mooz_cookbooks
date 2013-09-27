@@ -4,15 +4,15 @@ cd `dirname $0`
 case "${1:-''}" in
   'start')
     echo "starting boss in production mode..."
-    erl +K true +P 32768 -boot start_sasl -config boss -s boss -noshell -detached -sname <%=@application%>@<%=@hostname%> -pa <%=@deploy_path%>/current/ebin -pa <%=@deploy_path%>/shared/deps/*/ebin
+    exec erl +K true +P 32768 -boot start_sasl -config boss -s boss -noshell -detached -sname <%=@application%>@<%=@hostname%> -pa <%=@deploy_path%>/current/ebin -pa <%=@deploy_path%>/shared/deps/*/ebin
     ;;
   'stop')
     echo "stopping boss..."
-    erl -noshell -pa ebin  -sname stopper_<%=@application%>@<%=@hostname%> -eval "rpc:call('<%=@application%>@<%=@hostname%>', init, stop, [])." -s init stop
+    exec erl -noshell -pa ebin  -sname stopper_<%=@application%>@<%=@hostname%> -eval "rpc:call('<%=@application%>@<%=@hostname%>', init, stop, [])." -s init stop
     ;;
   'reload')
     echo "Hot code reload, (WARN: Only this node)"
-    erl -noshell -pa ebin  -sname reloader_<%=@application%>@<%=@hostname%> -eval "rpc:call('<%=@application%>@<%=@hostname%>', boss_load, reload_all, []), rpc:call('<%=@application%>@<%=@hostname%>', boss_web, reload_routes, []), rpc:call('<%=@application%>@<%=@hostname%>', boss_web, reload_all_translations, [])." -s init stop
+    exec erl -noshell -pa ebin  -sname reloader_<%=@application%>@<%=@hostname%> -eval "rpc:call('<%=@application%>@<%=@hostname%>', boss_load, reload_all, []), rpc:call('<%=@application%>@<%=@hostname%>', boss_web, reload_routes, []), rpc:call('<%=@application%>@<%=@hostname%>', boss_web, reload_all_translations, [])." -s init stop
     ;;
   'restart')
     echo "Restarting (stop-start) boss..."
