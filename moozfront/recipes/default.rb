@@ -10,7 +10,7 @@ node[:deploy].each do |application, deploy|
   directory "#{deploy[:deploy_to]}/shared" do
     group deploy[:group]
     owner deploy[:user]
-    mode 0770
+    mode 0775
     action :create
     recursive true
   end
@@ -21,7 +21,7 @@ node[:deploy].each do |application, deploy|
     directory "#{deploy[:deploy_to]}/shared/#{dir_name}" do
       group deploy[:group]
       owner deploy[:user]
-      mode 0770
+      mode 0775
       action :create
       recursive true
     end
@@ -40,7 +40,7 @@ node[:deploy].each do |application, deploy|
     deploy_data deploy
     app application
   end
-  
+
   ['ebin','deps'].each do |dir_name|
     link "#{deploy[:deploy_to]}/current/#{dir_name}" do
       target_file "#{deploy[:deploy_to]}/current/#{dir_name}"
