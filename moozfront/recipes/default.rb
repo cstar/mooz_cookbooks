@@ -17,7 +17,7 @@ node[:deploy].each do |application, deploy|
 
 
   # create shared/ directory structure
-  ['log','deps'].each do |dir_name|
+  ['log','deps', 'ebin'].each do |dir_name|
     directory "#{deploy[:deploy_to]}/shared/#{dir_name}" do
       group deploy[:group]
       owner deploy[:user]
@@ -29,6 +29,8 @@ node[:deploy].each do |application, deploy|
 
   template "#{deploy[:deploy_to]}/shared/erlasticsearch.config" do
     source "erlasticsearch.config.erb"
+    group deploy[:group]
+    owner deploy[:user]
     variables :erlasticsearch_elb => node[:moozfront][:erlasticsearch_elb]
   end
 
@@ -38,12 +40,17 @@ node[:deploy].each do |application, deploy|
     deploy_data deploy
     app application
   end
-
-  link "#{deploy[:deploy_to]}/current/deps" do
-    target_file "#{deploy[:deploy_to]}/current/deps"
-    to "#{deploy[:deploy_to]}/shared/deps"
-    owner deploy[:user]
+  
+  ['ebin','deps'].each do |dir_name|
+    link "#{deploy[:deploy_to]}/current/#{dir_name}" do
+      target_file "#{deploy[:deploy_to]}/current/#{dir_name}"
+      to "#{deploy[:deploy_to]}/shared/#{dir_name}"
+      group deploy[:group]
+      owner deploy[:user]
+    end
   end
+
+
 
   if node[:moozfront][:force_deps] == true
     execute "remove deps" do
