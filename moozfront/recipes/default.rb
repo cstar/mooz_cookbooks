@@ -51,7 +51,7 @@ node[:deploy].each do |application, deploy|
     app application
   end
 
-  ['ebin','deps'].each do |dir_name|
+  ['ebin','deps', "erlasticsearch.conf", "boss"].each do |dir_name|
     link "#{deploy[:deploy_to]}/current/#{dir_name}" do
       target_file "#{deploy[:deploy_to]}/current/#{dir_name}"
       to "#{deploy[:deploy_to]}/shared/#{dir_name}"
