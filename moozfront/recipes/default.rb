@@ -45,8 +45,6 @@ node[:deploy].each do |application, deploy|
               :cookie => node[:moozfront][:cookie]
   end
 
-
-
   opsworks_deploy do
     deploy_data deploy
     app application
@@ -77,6 +75,14 @@ node[:deploy].each do |application, deploy|
     end
   end
 
+  template "#{deploy[:deploy_to]}/current/boss.config" do
+    mode 0755
+    source "boss.config.erb"
+    group deploy[:group]
+    owner deploy[:user]
+    variables :app => node[:moozfront]
+  end
+
   execute "compile app" do
     command "./rebar compile skip_deps=true"
     cwd "#{deploy[:deploy_to]}/current"
@@ -84,6 +90,7 @@ node[:deploy].each do |application, deploy|
   end
 
   execute "restart server" do
+    environment "HOME" => deploy[:deploy_to]
     command "./boss restart"
     user deploy[:user]
     cwd "#{deploy[:deploy_to]}/current"
