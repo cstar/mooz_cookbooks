@@ -17,7 +17,7 @@ node[:deploy].each do |application, deploy|
 
 
   # create shared/ directory structure
-  ['log','deps', 'ebin'].each do |dir_name|
+  ['log','deps', 'ebin', "data"].each do |dir_name|
     directory "#{deploy[:deploy_to]}/shared/#{dir_name}" do
       group deploy[:group]
       owner deploy[:user]
@@ -41,6 +41,13 @@ node[:deploy].each do |application, deploy|
       owner deploy[:user]
     end
   end
+  link "#{deploy[:deploy_to]}/current/priv/sample" do
+      target_file "#{deploy[:deploy_to]}/current/priv/sample"
+      to "#{deploy[:deploy_to]}/shared/data"
+      group deploy[:group]
+      owner deploy[:user]
+    end
+
 
   template "#{deploy[:deploy_to]}/current/sys.config" do
     mode 0755
