@@ -27,13 +27,6 @@ node[:deploy].each do |application, deploy|
     end
   end
 
-  template "#{deploy[:deploy_to]}/shared/erlasticsearch.config" do
-    source "erlasticsearch.config.erb"
-    group deploy[:group]
-    owner deploy[:user]
-    variables :erlasticsearch_elb => node[:moozfront][:erlasticsearch_elb]
-  end
-
   template "#{deploy[:deploy_to]}/shared/boss" do
     mode 0755
     source "boss.erb"
