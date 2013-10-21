@@ -1,0 +1,9 @@
+[
+ {sasl,
+  [
+   {sasl_error_logger, {file, "/tmp/bulkimporter.sasl_log"}}
+  ]
+ },
+ {erlastic_search, [{host, <<"<%= @app[:erlasticsearch_elb]%>">>}]},
+ {bulkimporter, []}
+].
