@@ -70,7 +70,6 @@ node[:deploy].each do |application, deploy|
   end
 
   template "#{deploy[:deploy_to]}/current/boss.config" do
-    environment "HOME" => deploy[:deploy_to]
     mode 0755
     source "boss.config.erb"
     group deploy[:group]
@@ -78,7 +77,8 @@ node[:deploy].each do |application, deploy|
     variables :app => node[:moozfront]
   end
 
-  execute "compile app" do
+  execute "compile app" do    
+    environment "HOME" => deploy[:deploy_to]
     command "./rebar compile skip_deps=true"
     cwd "#{deploy[:deploy_to]}/current"
     user deploy[:user]
