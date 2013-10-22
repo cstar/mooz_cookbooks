@@ -62,6 +62,7 @@ node[:deploy].each do |application, deploy|
       user deploy[:user]
     end
     execute "fetch deps" do
+      environment "HOME" => deploy[:deploy_to]
       command "./rebar get-deps compile"
       cwd "#{deploy[:deploy_to]}/current"
       user deploy[:user]
@@ -69,6 +70,7 @@ node[:deploy].each do |application, deploy|
   end
 
   template "#{deploy[:deploy_to]}/current/boss.config" do
+    environment "HOME" => deploy[:deploy_to]
     mode 0755
     source "boss.config.erb"
     group deploy[:group]
