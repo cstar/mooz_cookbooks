@@ -1,0 +1,7 @@
+<% @sources.each do |importer, command| %>
+cd <%=@data_path%>
+<%=command%>
+cd <%=app_path%>
+./import <%=importer%>
+
+<%end%>

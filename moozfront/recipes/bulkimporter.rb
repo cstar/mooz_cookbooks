@@ -79,4 +79,35 @@ node[:deploy].each do |application, deploy|
     user deploy[:user]
   end
 
+  template "#{deploy[:deploy_to]}/current/import_all" do
+    mode 0755
+    source "import_all.erb"
+    group deploy[:group]
+    owner deploy[:user]
+    variables :sources => node[:bulkimporter][:feed_sources],
+              :data_path => "#{deploy[:deploy_to]}/shared/data"
+              :app_path => "#{deploy[:deploy_to]}/current"
+  end
+
+node[:bulkimporter][:static_datasources].each do |file|
+  s3_file "#{deploy[:deploy_to]}/shared/data" do
+    remote_path "/" + file
+    bucket node[:bulkimporter][:static_bucket]
+    owner deploy[:user]
+    group deploy[:group]
+    mode "0644"
+    action :create
+  end
+end
+
+  cron "Import indexes" do
+    action :create
+    minute  "0"
+    hour    "6"
+    home    "#{deploy[:deploy_to]}/current"
+    path    "#{deploy[:deploy_to]}/current"
+    user    deploy[:user]
+    mailto  node[:bulkimporter][:mailto]
+    command "./import_all"
+  end
 end
