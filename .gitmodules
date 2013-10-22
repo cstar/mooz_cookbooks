@@ -22,3 +22,6 @@
 [submodule "yum"]
 	path = yum
 	url = git://github.com/opscode-cookbooks/yum.git
+[submodule "s3_file"]
+	path = s3_file
+	url = git://github.com/adamsb6/s3_file.git
