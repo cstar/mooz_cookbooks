@@ -85,7 +85,7 @@ node[:deploy].each do |application, deploy|
     group deploy[:group]
     owner deploy[:user]
     variables :sources => node[:bulkimporter][:feed_sources],
-              :data_path => "#{deploy[:deploy_to]}/shared/data"
+              :data_path => "#{deploy[:deploy_to]}/shared/data",
               :app_path => "#{deploy[:deploy_to]}/current"
   end
 
