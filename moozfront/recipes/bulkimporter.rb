@@ -90,7 +90,7 @@ node[:deploy].each do |application, deploy|
   end
 
 node[:bulkimporter][:static_datasources].each do |file|
-  s3_file "#{deploy[:deploy_to]}/shared/data" do
+  s3_file "#{deploy[:deploy_to]}/shared/data/#{file}" do
     remote_path file
     bucket node[:bulkimporter][:static_bucket]
     owner deploy[:user]
