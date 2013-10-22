@@ -20,13 +20,13 @@
 
 {mail_driver, boss_mail_driver_smtp},
 <% if @app[:mail_relay_host] %>
-{mail_relay_host, "<%=@app[:mail_relay_host%>"},
+{mail_relay_host, "<%=@app[:mail_relay_host]%>"},
 <% end %>
 <% if @app[:mail_relay_username] %>
-{mail_relay_username, "<%=@app[:mail_relay_username%>"},
+{mail_relay_username, "<%=@app[:mail_relay_username]%>"},
 <% end %>
 <% if @app[:mail_relay_password] %>
-{mail_relay_password, "<%=@app[:mail_relay_password%>"},
+{mail_relay_password, "<%=@app[:mail_relay_password]%>"},
 <% end %>
 {port, 8001},
 {server, cowboy},
