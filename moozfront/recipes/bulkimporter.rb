@@ -105,7 +105,6 @@ end
     minute  "0"
     hour    "6"
     home    "#{deploy[:deploy_to]}/current"
-    path    "#{deploy[:deploy_to]}/current"
     user    deploy[:user]
     mailto  node[:bulkimporter][:mailto]
     command "./import_all"
