@@ -109,7 +109,7 @@ node[:deploy].each do |application, deploy|
       home    "#{deploy[:deploy_to]}/current"
       user    deploy[:user]
       mailto  node[:bulkimporter][:mailto]
-      command "./import carrefour_parser"
+      command "./import_#{source[:importer]}"
     end
   end
 
