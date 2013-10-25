@@ -1,7 +1,6 @@
-<% @sources.each do |importer, command| %>
-cd <%=@data_path%>
-<%=command%>
-cd <%=@app_path%>
-./import <%=importer%>
+#!/bin/bash
 
-<%end%>
+cd <%=@data_path%>
+<%=@source[:command]%>
+cd <%=@app_path%>
+./import <%=@source[:importer]%>

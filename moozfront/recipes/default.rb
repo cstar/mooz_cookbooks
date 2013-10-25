@@ -70,7 +70,7 @@ node[:deploy].each do |application, deploy|
   end
 
   template "#{deploy[:deploy_to]}/current/boss.config" do
-    mode 0755
+    mode 0644
     source "boss.config.erb"
     group deploy[:group]
     owner deploy[:user]
