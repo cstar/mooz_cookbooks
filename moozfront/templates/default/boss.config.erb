@@ -19,6 +19,8 @@
 %%   relay (if needed).
 
 {mail_driver, boss_mail_driver_smtp},
+{mail_relay_use_tls, always},
+{mail_relay_port, 587},
 <% if @app[:mail_relay_host] %>
 {mail_relay_host, "<%=@app[:mail_relay_host]%>"},
 <% end %>
