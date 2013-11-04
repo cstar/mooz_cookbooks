@@ -3,10 +3,10 @@
 cd <%=@data_path%>
 mv <%=@source[:name]%> <%=@source[:name]%>.prev
 <%=@source[:command]%>
-result=$0
+result=$?
 
-numlines=`wc -l <%=@source[:name]%> | cut -f 5 -d " "`
-if [[ $result -ne 0 && $numlines -ne 0 ]]
+numlines=`wc -l <%=@source[:name]%> | awk {' print $1 '}
+if [[ $result -eq 0 && $numlines -ne 0 ]]
 then
   cd <%=@app_path%>
  ./import <%=@source[:importer]%>
