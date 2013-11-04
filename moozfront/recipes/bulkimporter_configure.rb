@@ -1,21 +1,21 @@
-node[:deploy].each do |application, deploy|
-  next if not node[:opsworks][:instance][:layers].include? application 
+deploy_path = "/srv/www/bulkimporter"
+if node[:opsworks][:instance][:layers].include? "bulkimporter" 
   node[:bulkimporter][:feed_sources].each do |source|
-    template "#{deploy[:deploy_to]}/current/import_#{source[:importer]}" do
+    template "#{deploy_path}/current/import_#{source[:importer]}" do
       mode 0755
       source "import_all.erb"
-      group deploy[:group]
-      owner deploy[:user]
+      group "www-data"
+      owner "deploy"
       variables :source => source,
-                :data_path => "#{deploy[:deploy_to]}/shared/data",
-                :app_path => "#{deploy[:deploy_to]}/current"
+                :data_path => "#{deploy_path}/shared/data",
+                :app_path => "#{deploy_path}/current"
     end
     cron "cron for #{source[:importer]}" do
       action :create
       minute  source[:minutes] || "0"
       hour    source[:hours] || "6"
-      home    "#{deploy[:deploy_to]}/current"
-      user    deploy[:user]
+      home    "#{deploy_path}/current"
+      user    "deploy"
       mailto  node[:bulkimporter][:mailto]
       command "./import_#{source[:importer]}"
     end
