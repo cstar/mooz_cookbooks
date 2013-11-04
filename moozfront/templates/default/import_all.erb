@@ -5,7 +5,7 @@ mv <%=@source[:name]%> <%=@source[:name]%>.prev
 <%=@source[:command]%>
 result=$?
 
-numlines=`wc -l <%=@source[:name]%> | awk {' print $1 '}
+numlines=`wc -l <%=@source[:name]%> | awk {' print $1 '}`
 if [[ $result -eq 0 && $numlines -ne 0 ]]
 then
   cd <%=@app_path%>
