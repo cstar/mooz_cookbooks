@@ -1,11 +1,11 @@
 #!/bin/bash
 
 cd <%=@data_path%>
-mv <%=@source[:filename]%> <%=@source[:filename]%>.prev
+mv <%=@source[:name]%> <%=@source[:name]%>.prev
 <%=@source[:command]%>
-$result=$0
+result=$0
 
-numlines=`wc -l <%=@source[:filename]%> | cut -f 5 -d " "`
+numlines=`wc -l <%=@source[:name]%> | cut -f 5 -d " "`
 if [[ $result -ne 0 && $numlines -ne 0 ]]
 then
   cd <%=@app_path%>
