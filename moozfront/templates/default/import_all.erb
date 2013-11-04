@@ -1,6 +1,17 @@
 #!/bin/bash
 
 cd <%=@data_path%>
+mv <%=@source[:filename]%> <%=@source[:filename]%>.prev
 <%=@source[:command]%>
-cd <%=@app_path%>
-./import <%=@source[:importer]%>
+$result=$0
+
+numlines=`wc -l <%=@source[:filename]%> | cut -f 5 -d " "`
+if [[ $result -ne 0 && $numlines -ne 0 ]]
+then
+  cd <%=@app_path%>
+ ./import <%=@source[:importer]%>
+ exit 0
+else
+  echo "Erreur d'importation"
+  exit 1
+fi
