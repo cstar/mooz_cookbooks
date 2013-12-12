@@ -1,5 +1,16 @@
 deploy_path = "/srv/www/bulkimporter"
 if node[:opsworks][:instance][:layers].include? "bulkimporter" 
+  if node[:bulkimporter][:zanox]
+    cron "cron for Zanox" do
+      action :create
+      minute  node[:bulkimporter][:zanox][:minutes] || "0"
+      hour    node[:bulkimporter][:zanox][:hours] || "6"
+      home    "#{deploy_path}/current"
+      user    "deploy"
+      mailto  node[:bulkimporter][:mailto]
+      command "./zanox_import.sh"
+    end
+  end
   node[:bulkimporter][:feed_sources].each do |source|
     template "#{deploy_path}/current/import_#{source[:importer]}" do
       mode 0755
