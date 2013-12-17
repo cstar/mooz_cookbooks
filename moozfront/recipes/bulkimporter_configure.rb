@@ -28,7 +28,7 @@ if node[:opsworks][:instance][:layers].include? "bulkimporter"
       home    "#{deploy_path}/current"
       user    "deploy"
       mailto  node[:bulkimporter][:mailto]
-      command "./import_#{source[:importer]}"
+      command "cd #{deploy_path}/current && ./import_#{source[:importer]}"
     end
   end
 end
