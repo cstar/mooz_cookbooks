@@ -8,7 +8,7 @@ if node[:opsworks][:instance][:layers].include? "bulkimporter"
       home    "#{deploy_path}/current"
       user    "deploy"
       mailto  node[:bulkimporter][:mailto]
-      command "./zanox_import.sh"
+      command "cd #{deploy_path}/current && ./zanox_import.sh"
     end
   end
   node[:bulkimporter][:feed_sources].each do |source|
@@ -28,7 +28,7 @@ if node[:opsworks][:instance][:layers].include? "bulkimporter"
       home    "#{deploy_path}/current"
       user    "deploy"
       mailto  node[:bulkimporter][:mailto]
-      command "cd #{deploy_path}/current && ./import_#{source[:importer]}"
+      command "cd #{deploy_path}/current &&  ./import_#{source[:importer]}"
     end
   end
 end
