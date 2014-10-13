@@ -7,6 +7,8 @@ node[:deploy].each do |application, deploy|
     deploy_data deploy
   end
 
+  gem_package "fog"
+
   directory "#{deploy[:deploy_to]}/shared" do
     group deploy[:group]
     owner deploy[:user]
