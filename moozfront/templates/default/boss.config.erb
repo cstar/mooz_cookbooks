@@ -2,10 +2,7 @@
 [{boss, [
     {applications, [moozfront]},
     {assume_locale, "fr"},
-    {db_host, "dynamodb.eu-west-1.amazonaws.com"},
-    {db_adapter, dynamodb},
-    {db_username, "<%=@app[:ddb_username]%>"},
-    {db_password, "<%=@app[:ddb_password]%>"},
+    {db_adapter, mock},
 
 %%%%%%%%%%
 %% Mail %%
