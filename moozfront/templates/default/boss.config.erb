@@ -84,6 +84,8 @@
 %% doc_prefix - The URL prefix for developer documentation
 { moozfront, [
     {base_url, "/"},
-    {dummy, true}
+    {dummy, true},
+    {aws_access, "<%=@app[:aws_access]%>"},
+    {aws_secret, "<%=@app[:aws_secret]%>"}
 ]}
 ].
